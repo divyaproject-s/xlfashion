@@ -1,0 +1,417 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #e91e63;
+    /* Premium Pink */
+    --secondary-color: #880e4f;
+    /* Darker Pink */
+    --accent-gold: #c5a365;
+    --text-dark: #1a1a1a;
+    --navbar-bg: #e91e63;
+    /* Pink */
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    padding-top: 86px;
+    /* Header height offset */
+}
+
+/* --- Top Bar --- */
+.top-bar {
+    background-color: #000;
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 6px 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* --- Header & Navbar --- */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.custom-navbar {
+    background: var(--primary-color) !important;
+    background: linear-gradient(90deg, #ff1493 0%, #ff40ac 100%) !important;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* 1. Left Section: Brand & Nav */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff !important;
+    /* White Text */
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    /* White Icon BG */
+    color: var(--primary-color);
+    border-radius: 8px;
+    margin-right: 10px;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.text-highlight {
+    color: #ffd700;
+    /* Gold Highlight */
+}
+
+/* Navigation Links (Desktop) */
+.desktop-menu {
+    display: flex;
+    gap: 5px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 700;
+    /* Bold */
+    font-size: 1.1rem;
+    /* Increased size */
+    padding: 8px 15px !important;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 2. Center Section: Search */
+.nav-center {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 10px 45px 10px 20px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4);
+    outline: none;
+}
+
+.search-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: var(--primary-color);
+    padding: 8px;
+    transition: color 0.3s;
+}
+
+.search-btn:hover {
+    color: var(--secondary-color);
+}
+
+/* 3. Right Section: Action Icons */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    /* More spacing for labeled icons */
+}
+
+.nav-icon-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.95);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+    /* Label size */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-icon-link i {
+    font-size: 1.4rem;
+    /* Icon size */
+    margin-bottom: 2px;
+}
+
+.nav-icon-link:hover {
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.nav-icon-link:hover i {
+    color: #fff;
+}
+
+/* Dropdown Animation */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin-top: 15px !important;
+    animation: fadeUp 0.3s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.dropdown-item:hover {
+    background: #fff0f5;
+    color: var(--primary-color);
+}
+
+/* Mega Menu Enhancements */
+.mega-menu {
+    min-width: 650px;
+    border-top: 4px solid #fff;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+    .mega-menu {
+        min-width: 500px;
+    }
+}
+
+.mega-menu .dropdown-item {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    border-radius: 8px !important;
+}
+
+.mega-menu .dropdown-item:hover {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    transform: translateX(5px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 991px) {
+    .navbar-inner {
+        flex-wrap: wrap;
+    }
+
+    .nav-center {
+        order: 3;
+        /* Move search to bottom */
+        margin: 15px 0 0 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .desktop-menu {
+        display: none;
+        /* Hide desktop menu links */
+    }
+
+    /* We'll use the collapsed menu for mobile links if needed, 
+       but for now we are keeping it simple based on the request */
+
+    body {
+        padding-bottom: 70px;
+        /* Offset for bottom nav */
+    }
+
+    /* Mobile Drawer */
+    .mobile-menu-drawer {
+        width: 80% !important;
+        max-width: 320px;
+    }
+
+    .menu-section .section-title {
+        padding: 15px 20px 10px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #999;
+        letter-spacing: 1px;
+    }
+
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 20px;
+        color: #333;
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px solid #f8f9fa;
+        transition: all 0.2s;
+    }
+
+    .menu-item:active {
+        background: #fff0f5;
+        color: var(--primary-color);
+    }
+
+    /* Bottom Navigation */
+    .mobile-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        z-index: 1020;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .bottom-nav-link {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #666;
+        transition: all 0.2s;
+        gap: 2px;
+    }
+
+    .bottom-nav-link i {
+        font-size: 1.4rem;
+        transition: transform 0.2s;
+    }
+
+    .bottom-nav-link span {
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .bottom-nav-link.active {
+        color: var(--primary-color);
+    }
+
+    .bottom-nav-link:active i {
+        transform: scale(0.85);
+    }
+
+    /* Floating Center Icon for Cart */
+    .nav-icon-wrapper {
+        position: relative;
+    }
+}
+
+/* Wishlist Icon for Product Cards */
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wishlist-btn:hover {
+    transform: scale(1.15);
+    background: #fff;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.wishlist-btn i {
+    font-size: 1.3rem;
+    color: #cbd5e0;
+    transition: all 0.3s ease;
+}
+
+.wishlist-btn.active i {
+    color: #ff4757;
+}
+
+.wishlist-btn.active i::before {
+    content: "\F415";
+    /* bi-heart-fill */
+}
+
+.wishlist-btn:active {
+    transform: scale(0.9);
+}

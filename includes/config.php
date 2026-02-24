@@ -2,7 +2,7 @@
 $host = "localhost";   // Database host
 $user = "root";        // Database username
 $pass = "";            // Database password
-$dbname = "alankara";  // Database name
+$dbname = "xlfashion_db";  // Database name
 
 // Create connection
 $conn = new mysqli($host, $user, $pass, $dbname);

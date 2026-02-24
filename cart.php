@@ -1,73 +1,84 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
-// Check if the user is logged in, otherwise redirect to login page
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['login_alert'] = 'Please login or signup to continue with your purchase.';
-    header("Location: login.php");
-    exit();
-}
 include 'includes/config.php';
 
-// Initialize cart if not exists
-if (!isset($_SESSION['cart'])) {
+// --- Initialize cart ---
+if (!isset($_SESSION['cart']))
     $_SESSION['cart'] = [];
-}
 
-// Handle actions
 $action = $_GET['action'] ?? '';
 
-if ($action === 'add' && isset($_GET['id'])) {
+// --- ADD TO CART ---
+if ($action === 'add' && isset($_GET['id'], $_GET['size'])) {
     $id = intval($_GET['id']);
+    $size = $_GET['size'];
+    $cartKey = $id . '_' . $size;
 
-    // Fetch product from DB
-    $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id=?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    $result = $stmt->get_result();
-    $product = $result->fetch_assoc();
+    $product = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
 
     if ($product) {
-        // If product already in cart, increase qty
-        if (isset($_SESSION['cart'][$id])) {
-            $_SESSION['cart'][$id]['qty']++;
+        $size_stock = json_decode($product['size_stock'], true);
+        if ($size === "N/A" || $size === "NOSIZE") {
+            $stock = intval($product['stock']);
         } else {
-            $_SESSION['cart'][$id] = [
-                'name'  => $product['name'],
-                'price' => $product['price'],
+            $stock = $size_stock[$size] ?? 0;
+        }
+
+        if (isset($_SESSION['cart'][$cartKey])) {
+            if ($_SESSION['cart'][$cartKey]['qty'] < $stock) {
+                $_SESSION['cart'][$cartKey]['qty']++;
+            }
+        } else {
+            $_SESSION['cart'][$cartKey] = [
+                'id' => $id,
+                'name' => $product['name'],
+                'description' => $product['description'],
+                'price' => $product['sgd_price'],
                 'image' => $product['image'],
-                'qty'   => 1
+                'image_url' => $product['image_url'],
+                'size' => $size,
+                'qty' => 1,
+                'stock' => $stock,
+                'size_stock' => $product['size_stock']
             ];
+
         }
     }
+
     header("Location: cart.php");
     exit;
 }
 
-if ($action === 'remove' && isset($_GET['id'])) {
-    $id = intval($_GET['id']);
-    unset($_SESSION['cart'][$id]);
+
+// --- REMOVE ---
+if ($action === 'remove' && isset($_GET['key'])) {
+    unset($_SESSION['cart'][$_GET['key']]);
     header("Location: cart.php");
     exit;
 }
 
+// --- CLEAR ---
 if ($action === 'clear') {
-    unset($_SESSION['cart']);
+    $_SESSION['cart'] = [];
     header("Location: cart.php");
     exit;
 }
-?>
 
-<?php include 'includes/header.php'; ?>
+// --- Display cart ---
+include 'includes/header.php';
+$cart = $_SESSION['cart'];
+?>
+<!-- The rest is same as your updated cart display code with plus/minus buttons -->
+
 
 <div class="container my-5">
-    <h2 class="mb-4 text-center fw-bold gradient-text">
-        <i class="bi bi-cart-fill"></i> My Shopping Cart
-    </h2>
+    <h2 class="mb-4 text-center fw-bold gradient-text">🛒 My Shopping Cart</h2>
 
-    <?php if (!empty($_SESSION['cart'])): ?>
+    <?php if (!empty($cart)): ?>
         <div class="table-responsive shadow-lg rounded">
             <table class="table table-hover align-middle">
                 <thead class="bg-dark text-white">
@@ -79,65 +90,159 @@ if ($action === 'clear') {
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                <?php $grandTotal = 0; ?>
-                <?php foreach ($_SESSION['cart'] as $id => $item): ?>
-                    <?php $total = $item['price'] * $item['qty']; $grandTotal += $total; ?>
-                    <tr class="cart-row">
-                        <td class="d-flex align-items-center">
-                            <img src="assets/images/<?= htmlspecialchars($item['image']) ?>" 
-                                 width="70" height="70" 
-                                 class="me-3 rounded shadow-sm border">
-                            <span class="fw-semibold"><?= htmlspecialchars($item['name']) ?></span>
-                        </td>
-                        <td class="text-center">₹ <?= number_format($item['price'], 2) ?></td>
-                        <td class="text-center">
-                            <span class="badge bg-primary fs-6 px-3 py-2"><?= $item['qty'] ?></span>
-                        </td>
-                        <td class="text-center fw-bold text-success">₹ <?= number_format($total, 2) ?></td>
-                        <td class="text-center">
-                            <a href="cart.php?action=remove&id=<?= $id ?>" 
-                               class="btn btn-sm btn-outline-danger px-3">
-                               <i class="bi bi-trash-fill"></i> Remove
-                            </a>
+                <tbody id="cart-body">
+                    <?php $grandTotal = 0; ?>
+                    <?php foreach ($cart as $key => $item):
+                        $price = $item['price'] ?? 0;
+                        $qty = $item['qty'] ?? 1;
+                        $total = $price * $qty;
+                        $grandTotal += $total;
+
+                        // Determine stock for this size
+                        $size = $item['size'] ?? 'N/A';
+                        $product_stock = 0;
+
+                        if (!empty($item['size_stock'])) {
+                            $size_stock_data = is_array($item['size_stock']) ? $item['size_stock'] : json_decode($item['size_stock'], true);
+                            if (isset($size_stock_data[$size])) {
+                                $product_stock = intval($size_stock_data[$size]);
+                            } else {
+                                // Fallback to captured stock for non-sized items
+                                $product_stock = intval($item['stock'] ?? 0);
+                            }
+                        } else {
+                            $product_stock = intval($item['stock'] ?? 0);
+                        }
+                        ?>
+                        <tr data-key="<?= $key ?>" data-stock="<?= $product_stock ?>" data-price="<?= $price ?>">
+                            <td class="d-flex align-items-start">
+                                    <?php
+                                    $image = $item['image'];
+                                    $image_url = $item['image_url'] ?? '';
+                                    $name = $item['name'];
+                                    $img_src = !empty($image_url) ? $image_url : (!empty($image) ? "assets/images/" . $image : "");
+                                    ?>
+                                    <img src="<?= htmlspecialchars($img_src) ?>" alt="<?= htmlspecialchars($name) ?>" width="100" height="100"
+                                    class="me-3 rounded shadow-sm border">
+                                <div>
+                                    <h5><?= htmlspecialchars($item['name']) ?></h5>
+                                    <p class="text-muted mb-1"><?= nl2br(htmlspecialchars($item['description'])) ?></p>
+                                    <span class="badge bg-dark">Size: <?= htmlspecialchars($size) ?></span>
+                                    <?php if ($product_stock > 0): ?>
+                                        <span class="badge bg-success">Stock: <?= $product_stock ?></span>
+                                    <?php else: ?>
+                                        <span class="badge bg-danger">Out of Stock</span>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                            <td class="text-center"><?= number_format($price, 2) ?></td>
+                            <td class="text-center">
+                                <div class="qty-box">
+                                    <button class="btn btn-sm btn-outline-secondary minus">-</button>
+                                    <input type="text" class="form-control text-center qty" value="<?= $qty ?>"
+                                        style="width:50px;" readonly>
+                                    <button class="btn btn-sm btn-outline-secondary plus">+</button>
+                                </div>
+                            </td>
+                            <td class="text-center line-total"><?= number_format($total, 2) ?></td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-danger remove-item">Remove</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <tr class="table-light">
+                        <td colspan="3" class="text-end fw-bold">Grand Total</td>
+                        <td colspan="2" class="fw-bold text-success" id="grand-total"><?= number_format($grandTotal, 2) ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-                <tr class="table-warning fw-bold">
-                    <td colspan="3" class="text-end fs-5">Grand Total</td>
-                    <td colspan="2" class="fs-5 text-success">₹ <?= number_format($grandTotal, 2) ?></td>
-                </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-            <a href="cart.php?action=clear" class="btn btn-danger px-4">
-                <i class="bi bi-x-circle-fill"></i> Clear Cart
-            </a>
-            <a href="checkout.php" class="btn btn-success px-4">
-                <i class="bi bi-credit-card-fill"></i> Checkout
-            </a>
+            <a href="cart.php?action=clear" class="btn btn-danger px-4">Clear Cart</a>
+            <a href="checkout.php" class="btn btn-success px-4">Checkout</a>
         </div>
-
     <?php else: ?>
-        <div class="alert alert-info shadow-sm text-center py-4 fs-5">
-            <i class="bi bi-info-circle"></i> Your cart is empty.  
-            <br><a href="products.php" class="btn btn-sm btn-primary mt-3">🛍 Continue Shopping</a>
+        <div class="alert alert-info text-center py-4">
+            Your cart is empty. <a href="index.php">Continue Shopping</a>
         </div>
     <?php endif; ?>
 </div>
 
-<style>
-    .gradient-text {
-        background: linear-gradient(90deg, #7c0e20ff, #fc1978ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    .cart-row:hover {
-        background: #fff7f9 !important;
-        transition: 0.3s ease-in-out;
-    }
-</style>
+<script>
+    // Quantity update logic (same as checkout.php)
+    document.querySelectorAll(".qty-box").forEach(box => {
+        const minus = box.querySelector(".minus");
+        const plus = box.querySelector(".plus");
+        const qtyInput = box.querySelector(".qty");
+        const row = box.closest("tr");
+        const key = row.dataset.key;
+        const stock = parseInt(row.dataset.stock);
+
+        function updateTotals() {
+            const price = parseFloat(row.dataset.price);
+            const qty = parseInt(qtyInput.value);
+            row.querySelector(".line-total").textContent = (price * qty).toFixed(2);
+
+            let grand = 0;
+            document.querySelectorAll("#cart-body tr").forEach(r => {
+                const lt = r.querySelector(".line-total");
+                if (lt) grand += parseFloat(lt.textContent);
+            });
+            document.getElementById("grand-total").textContent = grand.toFixed(2);
+        }
+
+        function saveQty(qty) {
+            fetch("update_cart.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "key=" + encodeURIComponent(key) + "&qty=" + qty
+            }).then(res => res.json()).then(data => {
+                if (data.status === 'removed') row.remove();
+                updateTotals();
+            });
+        }
+
+        plus.addEventListener("click", () => {
+            let val = parseInt(qtyInput.value);
+            if (val < stock) {
+                qtyInput.value = val + 1;
+                updateTotals();
+                saveQty(val + 1);
+            } else alert("Cannot exceed stock!");
+        });
+
+        minus.addEventListener("click", () => {
+            let val = parseInt(qtyInput.value);
+            if (val > 1) {
+                qtyInput.value = val - 1;
+                updateTotals();
+                saveQty(val - 1);
+            }
+        });
+    });
+
+    // Remove button
+    document.querySelectorAll(".remove-item").forEach(btn => {
+        btn.addEventListener("click", e => {
+            const row = e.target.closest("tr");
+            const key = row.dataset.key;
+            fetch("update_cart.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "key=" + encodeURIComponent(key) + "&qty=0"
+            }).then(res => res.json()).then(data => {
+                if (data.status === 'removed') row.remove();
+                let grand = 0;
+                document.querySelectorAll("#cart-body tr").forEach(r => {
+                    const lt = r.querySelector(".line-total");
+                    if (lt) grand += parseFloat(lt.textContent);
+                });
+                document.getElementById("grand-total").textContent = grand.toFixed(2);
+            });
+        });
+    });
+</script>
 
 <?php include 'includes/footer.php'; ?>

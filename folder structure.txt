@@ -1,0 +1,51 @@
+XLFASHIONT.SG
+|
+|--admin
+|      |--add_product.php
+|      |--admin_index.php
+|      |--add_category.php
+|      |--delete_category.php
+|      |--edit_category.php
+|      |--manage_categories.php
+|      |--delete_order.php
+|      |--delete_product.php
+|      |--edit_product.php
+|	   |--export_orders.php 
+|      |--logout.php
+|      |--manage_orders.php
+|      |--manage_products.php
+|      |--manage_users.php
+|      |--print_bill.php
+|      |--view_order.php
+|
+|--assets
+|    |--category
+|    |     |-gowns.jpg
+|    |--images
+|        
+|--includes    
+|     |
+|     |--config.php
+|     |--footer.php
+|     |--header.php
+|     
+|--vendor     
+|
+|--add_to_cart.php
+|--cart.php
+|--category.php
+|--checkout_process.php
+|--checkout.php
+|--composer.json
+|--composer.lock
+|--database.sql
+|--hash.php
+|--index.php
+|--login.php
+|--logout.php
+|--my_orders.php
+|--order_success.php
+|--product.php
+|--register.php
+|--submit_review.php
+|--update_cart.php
