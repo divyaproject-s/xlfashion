@@ -1,0 +1,709 @@
+/* ========================
+   Checkout Page Styles
+======================== */
+
+:root {
+    --primary-color: #e91e63;
+    --secondary-color: #880e4f;
+    --text-dark: #1a1a1a;
+    --light-bg: #f8f9fa;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --hover-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--light-bg);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ========================
+   Checkout Container
+======================== */
+.checkout-card {
+    max-width: 1000px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+}
+
+.checkout-header {
+    background: linear-gradient(90deg, #c40e2c, #fc1978);
+    color: #fff;
+    padding: 18px 24px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.checkout-body {
+    padding: 2rem;
+}
+
+/* ========================
+   Checkout Table
+======================== */
+.checkout-table-wrapper {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.checkout-table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: collapse;
+}
+
+.checkout-table thead {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #eee;
+}
+
+.checkout-table thead th {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dark);
+}
+
+.checkout-table thead th:first-child {
+    text-align: left;
+}
+
+.checkout-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.checkout-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.checkout-table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* ========================
+   Product Cell
+======================== */
+.product-cell {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.product-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    border: 1px solid #eee;
+}
+
+.product-info h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--text-dark);
+}
+
+.product-info small {
+    color: #666;
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+}
+
+.product-badges {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.product-badges .badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.price-cell,
+.qty-cell,
+.total-cell {
+    text-align: center;
+    font-weight: 700;
+}
+
+.price-cell {
+    color: var(--text-dark);
+}
+
+.total-cell {
+    color: var(--primary-color);
+    font-size: 1.05rem;
+}
+
+/* ========================
+   Quantity Box
+======================== */
+.qty-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.qty-box button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.qty-box button:hover {
+    transform: scale(1.1);
+}
+
+.qty-box input {
+    width: 50px;
+    text-align: center;
+    font-weight: 700;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.35rem;
+    font-size: 0.9rem;
+}
+
+.remove-item {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.remove-item:hover {
+    transform: scale(1.05);
+}
+
+/* ========================
+   Grand Total Row
+======================== */
+.checkout-grand-total {
+    background: #f5f5f5;
+    font-weight: 700;
+}
+
+.checkout-grand-total td {
+    padding: 1rem;
+}
+
+.grand-total-label {
+    text-align: right;
+    color: var(--text-dark);
+}
+
+.grand-total-value {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* ========================
+   Delivery Address Section
+======================== */
+.checkout-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.checkout-section h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.address-option {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.address-option:hover {
+    background: #f5f5f5;
+}
+
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.15rem;
+    cursor: pointer;
+}
+
+.form-check-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.registered-address {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 0.75rem;
+    background: #fff;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.form-control {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.1);
+}
+
+.form-control:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* ========================
+   Action Buttons
+======================== */
+.checkout-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.btn-outline-danger {
+    color: var(--text-dark);
+    border: 2px solid var(--text-dark);
+    background: transparent;
+}
+
+.btn-outline-danger:hover {
+    background: var(--text-dark);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-gradient {
+    background: linear-gradient(90deg, #c40e2c, #fc1978);
+    color: #fff;
+    border: none;
+}
+
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);
+}
+
+/* ========================
+   Tablet Responsive (≤768px)
+======================== */
+@media (max-width: 768px) {
+    .checkout-card {
+        margin: 20px;
+        border-radius: 12px;
+    }
+
+    .checkout-header {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+    }
+
+    .checkout-body {
+        padding: 1.5rem;
+    }
+
+    .checkout-table thead th {
+        padding: 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .checkout-table tbody td {
+        padding: 0.75rem;
+    }
+
+    .product-thumb {
+        width: 50px;
+        height: 50px;
+    }
+
+    .product-info h5 {
+        font-size: 0.85rem;
+    }
+
+    .product-info small {
+        font-size: 0.75rem;
+    }
+
+    .price-cell,
+    .total-cell {
+        font-size: 0.9rem;
+    }
+
+    .qty-box input {
+        width: 40px;
+        font-size: 0.8rem;
+    }
+
+    .qty-box button {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+
+    .remove-item {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .grand-total-value {
+        font-size: 1.1rem;
+    }
+
+    .checkout-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+    }
+
+    .checkout-section h5 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .address-option {
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .registered-address {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .form-control {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+
+    .checkout-actions {
+        gap: 0.75rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ========================
+   Mobile Responsive (≤480px)
+======================== */
+@media (max-width: 480px) {
+    .checkout-card {
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .checkout-header {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .checkout-body {
+        padding: 1rem;
+    }
+
+    /* Convert table to card layout on mobile */
+    .checkout-table {
+        display: block;
+    }
+
+    .checkout-table thead {
+        display: none;
+    }
+
+    .checkout-table tbody,
+    .checkout-table tbody tr,
+    .checkout-table tbody td {
+        display: block;
+        width: 100%;
+    }
+
+    .checkout-table tbody tr {
+        border-bottom: 1.5px solid #ddd;
+        margin-bottom: 1rem;
+        padding: 0.75rem 0;
+    }
+
+    .checkout-table tbody td {
+        padding: 0.5rem 0;
+        border-bottom: none;
+        position: relative;
+    }
+
+    .checkout-table tbody td:before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #666;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .product-cell {
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .product-thumb {
+        width: 50px;
+        height: 50px;
+    }
+
+    .product-info h5 {
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .product-info small {
+        font-size: 0.7rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .price-cell {
+        text-align: left;
+        font-size: 0.9rem;
+    }
+
+    .qty-cell {
+        text-align: left;
+    }
+
+    .qty-box {
+        justify-content: flex-start;
+        gap: 0.3rem;
+    }
+
+    .qty-box input {
+        width: 35px;
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .qty-box button {
+        width: 26px;
+        height: 26px;
+        font-size: 0.7rem;
+    }
+
+    .total-cell {
+        text-align: left;
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+    }
+
+    .remove-item {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 0.7rem;
+        margin-top: 0.5rem;
+    }
+
+    .checkout-grand-total {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .checkout-grand-total td {
+        padding: 0.75rem;
+    }
+
+    .grand-total-label {
+        text-align: right;
+        grid-column: 1;
+    }
+
+    .grand-total-value {
+        text-align: left;
+        grid-column: 2;
+        font-size: 1rem;
+    }
+
+    .checkout-section {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+
+    .checkout-section h5 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .address-option {
+        padding: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-check-input {
+        width: 1.1rem;
+        height: 1.1rem;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+
+    .registered-address {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+    }
+
+    .form-control {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+
+    .checkout-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .btn-outline-danger {
+        border-width: 1px;
+    }
+}
+
+/* ========================
+   Extra Small Phones (≤360px)
+======================== */
+@media (max-width: 360px) {
+    .checkout-card {
+        margin: 5px;
+    }
+
+    .checkout-header {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .checkout-body {
+        padding: 0.75rem;
+    }
+
+    .product-thumb {
+        width: 45px;
+        height: 45px;
+    }
+
+    .product-info h5 {
+        font-size: 0.75rem;
+    }
+
+    .qty-box input {
+        width: 30px;
+    }
+
+    .checkout-section h5 {
+        font-size: 0.85rem;
+    }
+
+    .address-option {
+        padding: 0.4rem;
+    }
+
+    .form-check-label {
+        font-size: 0.8rem;
+    }
+}
+
+/* ========================
+   Print Styles
+======================== */
+@media print {
+    body {
+        background: #fff;
+    }
+
+    .checkout-card {
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .checkout-actions {
+        display: none;
+    }
+
+    .checkout-table {
+        display: table;
+    }
+
+    .checkout-table thead {
+        display: table-header-group;
+    }
+
+    .checkout-table tbody tr,
+    .checkout-table tbody td {
+        display: table-row;
+        border: 1px solid #ddd;
+    }
+}

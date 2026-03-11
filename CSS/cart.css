@@ -1,0 +1,556 @@
+/* ========================
+   Cart Page Styles
+======================== */
+
+:root {
+    --primary-color: #e91e63;
+    --secondary-color: #880e4f;
+    --text-dark: #1a1a1a;
+    --light-bg: #fff5f8;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --hover-shadow: 0 20px 40px rgba(255, 20, 147, 0.15);
+}
+
+/* ========================
+   Cart Header
+======================== */
+.cart-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.cart-header .gradient-text {
+    background: linear-gradient(90deg, #d6006e, #ff69b4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    display: inline-block;
+}
+
+/* ========================
+   Desktop Cart Table
+======================== */
+.cart-table-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+}
+
+.cart-table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: collapse;
+}
+
+.cart-table thead {
+    background: var(--text-dark);
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.cart-table thead th {
+    padding: 1.25rem;
+    border: none;
+    text-align: center;
+}
+
+.cart-table thead th:first-child {
+    text-align: left;
+}
+
+.cart-table tbody tr {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.cart-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.cart-table tbody td {
+    padding: 1.25rem;
+    vertical-align: middle;
+}
+
+.cart-product-cell {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.cart-product-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.cart-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-product-info h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.cart-product-info p {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.cart-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.cart-badges .badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.6rem;
+}
+
+.cart-price {
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+/* ========================
+   Quantity Box
+======================== */
+.qty-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.qty-box .btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.qty-box .btn:hover {
+    transform: scale(1.1);
+}
+
+.qty-box .qty {
+    width: 50px;
+    text-align: center;
+    font-weight: 700;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.35rem;
+    font-size: 0.9rem;
+}
+
+.line-total {
+    text-align: center;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+.remove-item {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.remove-item:hover {
+    transform: scale(1.05);
+}
+
+/* ========================
+   Grand Total Row
+======================== */
+.cart-grand-total {
+    background-color: #f5f5f5;
+    font-weight: 700;
+    text-align: right;
+}
+
+.cart-grand-total .grand-label {
+    text-align: right;
+    padding-right: 1.25rem;
+}
+
+.cart-grand-total .grand-value {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    padding-right: 1.25rem;
+}
+
+/* ========================
+   Cart Actions
+======================== */
+.cart-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.cart-actions .btn {
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.cart-actions .btn:hover {
+    transform: translateY(-2px);
+}
+
+.cart-actions .btn-danger {
+    background-color: var(--text-dark);
+    border-color: var(--text-dark);
+}
+
+.cart-actions .btn-danger:hover {
+    background-color: #000;
+    border-color: #000;
+}
+
+.cart-actions .btn-success {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.cart-actions .btn-success:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* ========================
+   Empty Cart
+======================== */
+.cart-empty {
+    background: linear-gradient(135deg, var(--light-bg) 0%, #fff 100%);
+    border-radius: 12px;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.cart-empty .alert {
+    background: none;
+    border: none;
+    color: #666;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.cart-empty a {
+    color: var(--primary-color);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.cart-empty a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* ========================
+   Tablet Responsive (≤768px)
+======================== */
+@media (max-width: 768px) {
+    .cart-header {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cart-table-wrapper {
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+    }
+
+    .cart-table thead th {
+        padding: 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .cart-table tbody td {
+        padding: 0.75rem;
+    }
+
+    .cart-product-cell {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cart-product-image {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cart-product-info h5 {
+        font-size: 0.85rem;
+    }
+
+    .cart-product-info p {
+        font-size: 0.75rem;
+    }
+
+    .cart-price,
+    .line-total {
+        font-size: 0.9rem;
+    }
+
+    .qty-box .qty {
+        width: 40px;
+        font-size: 0.8rem;
+    }
+
+    .remove-item {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .cart-grand-total .grand-value {
+        font-size: 1.1rem;
+    }
+
+    .cart-actions {
+        gap: 0.75rem;
+    }
+
+    .cart-actions .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .cart-empty {
+        padding: 2rem 1rem;
+    }
+}
+
+/* ========================
+   Mobile Responsive (≤480px)
+======================== */
+@media (max-width: 480px) {
+    .cart-header {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Convert table to card layout on mobile */
+    .cart-table {
+        display: block;
+    }
+
+    .cart-table thead {
+        display: none;
+    }
+
+    .cart-table tbody,
+    .cart-table tbody tr,
+    .cart-table tbody td {
+        display: block;
+        width: 100%;
+    }
+
+    .cart-table tbody tr {
+        border-bottom: 1.5px solid #ddd;
+        margin-bottom: 1rem;
+        padding: 1rem 0;
+    }
+
+    .cart-table tbody td {
+        padding: 0.5rem 0;
+        border-bottom: none;
+        position: relative;
+        padding-left: 0;
+    }
+
+    .cart-product-cell {
+        padding: 0;
+    }
+
+    .cart-product-image {
+        width: 70px;
+        height: 70px;
+    }
+
+    .cart-product-info h5 {
+        font-size: 0.8rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .cart-product-info p {
+        font-size: 0.7rem;
+    }
+
+    .cart-product-info {
+        margin-bottom: 1rem;
+    }
+
+    /* Price, Qty, Total labels and values on mobile */
+    .cart-table tbody td:before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #666;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .cart-price {
+        text-align: left;
+    }
+
+    .qty-box {
+        justify-content: flex-start;
+        gap: 0.3rem;
+    }
+
+    .qty-box .qty {
+        width: 35px;
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+
+    .qty-box .btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .line-total {
+        text-align: left;
+        font-size: 0.95rem;
+    }
+
+    .remove-item {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .cart-grand-total {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .cart-grand-total .grand-label {
+        text-align: right;
+        padding: 0;
+        grid-column: 1;
+        padding-right: 0.5rem;
+    }
+
+    .cart-grand-total .grand-value {
+        text-align: left;
+        padding: 0;
+        grid-column: 2;
+        padding-left: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .cart-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: stretch;
+        margin-bottom: 1.5rem;
+    }
+
+    .cart-actions .btn {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+
+    .cart-empty {
+        padding: 1.5rem 1rem;
+    }
+
+    .cart-empty .alert {
+        padding: 0.5rem 0;
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .cart-empty a {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ========================
+   Extra Small Phones (≤360px)
+======================== */
+@media (max-width: 360px) {
+    .cart-header {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .cart-product-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cart-product-info h5 {
+        font-size: 0.75rem;
+    }
+
+    .qty-box .qty {
+        width: 30px;
+    }
+
+    .cart-table tbody tr {
+        margin-bottom: 0.75rem;
+        padding: 0.75rem 0;
+    }
+}
+
+/* ========================
+   Print Styles
+======================== */
+@media print {
+    .cart-actions {
+        display: none;
+    }
+
+    .cart-table {
+        box-shadow: none;
+    }
+
+    .cart-table thead {
+        display: table-header-group;
+    }
+
+    .cart-table tbody tr,
+    .cart-table tbody td {
+        display: table-row;
+        border: 1px solid #ddd;
+    }
+}

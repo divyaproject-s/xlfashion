@@ -2,19 +2,41 @@
    GLOBAL ANIMATIONS & EFFECTS
 ============================== */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideUp {
-    from { transform: translateY(40px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @keyframes glowPulse {
-    0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-    50% { box-shadow: 0 0 25px rgba(255,255,255,0.4); }
-    100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+    0% {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+    }
 }
 
 /* ============================
@@ -27,8 +49,8 @@
     backdrop-filter: blur(18px);
     background: rgba(255, 255, 255, 0.60);
     border-radius: 18px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    border: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.35);
 
     animation: fadeIn 0.8s ease forwards;
 }
@@ -51,7 +73,7 @@
 
 .product-image:hover img {
     transform: scale(1.12);
-    box-shadow: 0 20px 35px rgba(0,0,0,0.35);
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35);
 }
 
 /* Zoom glow effect */
@@ -62,7 +84,10 @@
 /* ============================
    TEXT ANIMATION
 ============================== */
-h2, p, .price, .old-price {
+h2,
+p,
+.price,
+.old-price {
     animation: fadeIn 1s ease;
 }
 
@@ -107,18 +132,18 @@ h2, p, .price, .old-price {
 ============================== */
 .review-box {
     padding: 22px;
-    background: rgba(255,255,255,0.55);
+    background: rgba(255, 255, 255, 0.55);
     border-radius: 15px;
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(12px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 
     animation: slideUp 0.8s ease;
 }
 
 .review {
     padding: 15px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 
     animation: fadeIn 0.9s ease;
 }
@@ -132,6 +157,28 @@ h2, p, .price, .old-price {
 .rating i {
     color: #ffb400;
     font-size: 20px;
+}
+
+.star-rating-input {
+    display: flex;
+    gap: 8px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.star-rating-input .star-icon {
+    color: #ccc;
+    transition: all 0.2s ease;
+}
+
+.star-rating-input .star-icon.selected,
+.star-rating-input .star-icon:hover {
+    color: #ffb400;
+    transform: scale(1.15);
+}
+
+.star-rating-input .star-icon.bi-star-fill {
+    color: #ffb400;
 }
 
 /* ============================
@@ -155,15 +202,22 @@ h2, p, .price, .old-price {
 ============================== */
 @media (max-width: 768px) {
     .product-detail {
-        padding: 20px;
+        padding: 15px;
+        margin: 15px auto;
     }
 
     .btn-cart,
     .btn-warning {
         width: 100%;
+        margin-bottom: 10px;
+        padding: 12px 20px !important;
     }
 
     .product-image img {
         height: auto;
+    }
+
+    .price-area {
+        margin-bottom: 25px;
     }
 }

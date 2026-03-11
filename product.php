@@ -89,15 +89,16 @@ if (count($reviews) > 0) {
 
             <!-- IMAGE -->
             <div class="col-md-5 position-relative">
-                <div class="product-gallery">
-                    <?php 
+                <div class="product-image">
+                    <?php
                     $curr_img = $product['image'];
                     $curr_url = $product['image_url'] ?? '';
                     $img_src = !empty($curr_url) ? $curr_url : (!empty($curr_img) ? "assets/images/" . $curr_img : "");
                     ?>
-                    <img src="<?= htmlspecialchars($img_src) ?>" class="img-fluid rounded-3 shadow-sm" alt="<?= htmlspecialchars($product['name']) ?>">
+                    <img src="<?= htmlspecialchars($img_src) ?>" class="img-fluid rounded-3 shadow-sm"
+                        alt="<?= htmlspecialchars($product['name']) ?>">
                 </div>
-                
+
                 <?php
                 $is_wishlisted = '';
                 if (isset($_SESSION['user_id'])) {
@@ -109,7 +110,9 @@ if (count($reviews) > 0) {
                     }
                 }
                 ?>
-                <button class="wishlist-btn <?= $is_wishlisted ?>" onclick="toggleWishlist(event, <?= $product['id'] ?>, this)" title="Add to Wishlist" style="top: 20px; right: 20px; width: 45px; height: 45px;">
+                <button class="wishlist-btn <?= $is_wishlisted ?>"
+                    onclick="toggleWishlist(event, <?= $product['id'] ?>, this)" title="Add to Wishlist"
+                    style="top: 20px; right: 20px; width: 45px; height: 45px;">
                     <i class="bi bi-heart" style="font-size: 1.5rem;"></i>
                 </button>
             </div>
@@ -120,12 +123,13 @@ if (count($reviews) > 0) {
 
                 <!-- PRICE -->
                 <div class="mb-2">
-                    <?php 
+                    <?php
                     $u_price = floatval($product['usual_price']);
                     $s_price = floatval($product['sgd_price']);
-                    if ($u_price > $s_price): 
-                    ?>
-                        <span class="text-muted text-decoration-line-through me-2 fs-5">SGD <?= number_format($u_price, 2) ?></span>
+                    if ($u_price > $s_price):
+                        ?>
+                        <span class="text-muted text-decoration-line-through me-2 fs-5">SGD
+                            <?= number_format($u_price, 2) ?></span>
                     <?php endif; ?>
                     <span class="fw-bold text-danger fs-4">SGD <?= number_format($product['sgd_price'], 2) ?></span>
                 </div>
@@ -168,8 +172,8 @@ if (count($reviews) > 0) {
                         ⚡ Buy Now
                     </button>
                 <?php elseif ($total_stock > 0): ?>
-                    <a href="checkout.php?buy_now=<?= $product['id'] ?>" onclick="return checkLogin(event)" class="btn btn-warning mt-3"
-                        style="border-radius:25px; padding:12px 25px;">⚡ Buy Now</a>
+                    <a href="checkout.php?buy_now=<?= $product['id'] ?>" onclick="return checkLogin(event)"
+                        class="btn btn-warning mt-3" style="border-radius:25px; padding:12px 25px;">⚡ Buy Now</a>
                 <?php endif; ?>
 
                 <!-- AVERAGE RATING -->
@@ -222,17 +226,16 @@ if (count($reviews) > 0) {
                         <form id="reviewForm">
                             <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
 
-                            <!-- Rating -->
-                            <div class="mb-2">
-                                <label>Rating:</label>
-                                <select name="rating" class="form-select w-25" required>
-                                    <option value="">Select Rating</option>
+                            <!-- Star Rating -->
+                            <div class="mb-3">
+                                <label class="mb-2">Your Rating:</label>
+                                <div class="star-rating-input" id="starRating">
                                     <?php for ($r = 1; $r <= 5; $r++): ?>
-                                        <option value="<?= $r ?>" <?= ($user_review && $user_review['rating'] == $r) ? "selected" : "" ?>>
-                                            <?= $r ?> Star<?= $r > 1 ? 's' : '' ?>
-                                        </option>
+                                        <i class="bi bi-star star-icon" data-value="<?= $r ?>"></i>
                                     <?php endfor; ?>
-                                </select>
+                                </div>
+                                <input type="hidden" name="rating" id="ratingInput"
+                                    value="<?= $user_review['rating'] ?? '' ?>" required>
                             </div>
 
                             <!-- Comment -->
@@ -263,8 +266,8 @@ if (count($reviews) > 0) {
     <script>
         function checkLogin(event) {
             if (!isLoggedIn) {
-                if(event) event.preventDefault();
-                
+                if (event) event.preventDefault();
+
                 // If it's a form submission, handle it
                 if (event && event.type === 'submit') {
                     const form = event.target;
@@ -291,12 +294,53 @@ if (count($reviews) > 0) {
                 showLoginModal(() => buyNow(id));
                 return;
             }
-            
+
             let sizeSelect = document.querySelector("select[name='size']");
             let size = sizeSelect ? sizeSelect.value : "N/A";
             if (sizeSelect && !size) { alert("Please select a size"); return; }
             window.location.href = "checkout.php?buy_now=" + id + "&size=" + size;
         }
+
+        // Star Rating Logic
+        document.addEventListener('DOMContentLoaded', function () {
+            const starContainer = document.getElementById('starRating');
+            if (!starContainer) return;
+
+            const stars = starContainer.querySelectorAll('.star-icon');
+            const ratingInput = document.getElementById('ratingInput');
+            let currentRating = ratingInput.value;
+
+            function updateStars(val) {
+                stars.forEach(s => {
+                    const sVal = s.getAttribute('data-value');
+                    if (sVal <= val) {
+                        s.classList.replace('bi-star', 'bi-star-fill');
+                        s.classList.add('selected');
+                    } else {
+                        s.classList.replace('bi-star-fill', 'bi-star');
+                        s.classList.remove('selected');
+                    }
+                });
+            }
+
+            if (currentRating) updateStars(currentRating);
+
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function () {
+                    updateStars(this.getAttribute('data-value'));
+                });
+
+                star.addEventListener('mouseout', function () {
+                    updateStars(currentRating || 0);
+                });
+
+                star.addEventListener('click', function () {
+                    currentRating = this.getAttribute('data-value');
+                    ratingInput.value = currentRating;
+                    updateStars(currentRating);
+                });
+            });
+        });
 
         // Submit review via AJAX
         document.getElementById('reviewForm')?.addEventListener('submit', function (e) {

@@ -82,68 +82,21 @@ $grandTotal = cartTotals($cart);
     <meta charset="UTF-8">
     <title>Checkout - XL Fashion Trends</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8f9fa;
-        }
-
-        .checkout-card {
-            max-width: 1000px;
-            margin: 40px auto;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-
-        .checkout-header {
-            background: linear-gradient(90deg, #c40e2c, #fc19787b);
-            color: #fff;
-            padding: 18px 24px;
-            font-weight: 600;
-        }
-
-        .product-thumb {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .qty-box {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .qty-box button {
-            width: 32px;
-            height: 32px;
-            font-weight: bold;
-        }
-
-        .btn-gradient {
-            background: linear-gradient(90deg, #c40e2c, #fc19787b);
-            color: #fff;
-            border: none;
-            border-radius: 40px;
-            padding: 10px 22px;
-            font-weight: 600;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/checkout.css?v=<?= time(); ?>">
 </head>
 
 <body>
 
     <div class="checkout-card">
         <div class="checkout-header">🧾 Checkout</div>
-        <div class="p-4">
-            <div class="table-responsive mb-4">
-                <table class="table align-middle">
-                    <thead class="table-light">
+        <div class="checkout-body">
+            <div class="checkout-table-wrapper mb-4">
+                <table class="checkout-table">
+                    <thead>
                         <tr>
                             <th>Product</th>
                             <th>Price ($)</th>
-                            <th width="150">Qty</th>
+                            <th>Qty</th>
                             <th>Total ($)</th>
                             <th>Action</th>
                         </tr>
@@ -160,8 +113,8 @@ $grandTotal = cartTotals($cart);
                             $total = $qty * $price;
                             ?>
                             <tr data-key="<?= $key ?>" data-price="<?= $price ?>" data-stock="<?= $stock ?>">
-                                <td>
-                                    <div class="d-flex gap-3 align-items-start">
+                                <td data-label="Product">
+                                    <div class="product-cell">
                                         <?php 
                                         $image = $item['image'] ?? '';
                                         $image_url = $item['image_url'] ?? '';
@@ -170,36 +123,37 @@ $grandTotal = cartTotals($cart);
                                         ?>
                                             <img src="<?= $img_src ?>" class="product-thumb" alt="<?= $name ?>">
                                         <?php endif; ?>
-                                        <div>
-                                            <strong><?= $name ?></strong><br>
-                                            <small class="text-muted"><?= nl2br($desc) ?></small><br>
-                                            <span class="badge bg-dark">Size: <?= $size ?></span>
-                                            <?php if ($stock > 0): ?>
-                                                <span class="badge bg-success">Stock: <?= $stock ?></span>
-                                            <?php else: ?>
-                                                <span class="badge bg-danger">Out of Stock</span>
-                                            <?php endif; ?>
+                                        <div class="product-info">
+                                            <h5><?= $name ?></h5>
+                                            <small><?= nl2br($desc) ?></small>
+                                            <div class="product-badges">
+                                                <span class="badge bg-dark">Size: <?= $size ?></span>
+                                                <?php if ($stock > 0): ?>
+                                                    <span class="badge bg-success">Stock: <?= $stock ?></span>
+                                                <?php else: ?>
+                                                    <span class="badge bg-danger">Out of Stock</span>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="price">$<?= number_format($price, 2) ?></td>
-                                <td>
+                                <td data-label="Price" class="price-cell">$<?= number_format($price, 2) ?></td>
+                                <td data-label="Qty" class="qty-cell">
                                     <div class="qty-box">
                                         <button class="btn btn-sm btn-outline-secondary minus">-</button>
-                                        <input type="text" class="form-control text-center qty" value="<?= $qty ?>"
-                                            style="width:50px;" readonly>
+                                        <input type="text" class="form-control qty" value="<?= $qty ?>" readonly>
                                         <button class="btn btn-sm btn-outline-secondary plus">+</button>
                                     </div>
                                 </td>
-                                <td class="line-total fw-semibold">$<?= number_format($total, 2) ?></td>
-                                <td>
+                                <td data-label="Total" class="total-cell">$<?= number_format($total, 2) ?></td>
+                                <td data-label="Action">
                                     <button class="btn btn-sm btn-outline-danger remove-item">Remove</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                        <tr class="table-light">
-                            <td colspan="3" class="text-end fw-bold">Grand Total</td>
-                            <td class="fw-bold" id="grand-total">$<?= number_format($grandTotal, 2) ?></td>
+                        <tr class="checkout-grand-total">
+                            <td colspan="3" class="grand-total-label">Grand Total</td>
+                            <td class="grand-total-value" id="grand-total">$<?= number_format($grandTotal, 2) ?></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -208,23 +162,29 @@ $grandTotal = cartTotals($cart);
 
             <!-- Delivery Address -->
             <form method="post" action="checkout_process.php">
-                <h5>📦 Delivery Address</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="address_option" id="defaultAddr" value="default"
-                        checked>
-                    <label class="form-check-label" for="defaultAddr">
-                        Use my registered address:
-                        <div class="border rounded p-2 mt-1 bg-light"><?= htmlspecialchars($user_address) ?></div>
-                    </label>
-                </div>
-                <div class="form-check mt-3">
-                    <input class="form-check-input" type="radio" name="address_option" id="newAddr" value="new">
-                    <label class="form-check-label" for="newAddr">Deliver to another address:</label>
-                    <textarea name="new_address" id="new_address" class="form-control mt-2" rows="3"
-                        placeholder="Enter new delivery address" disabled></textarea>
+                <div class="checkout-section">
+                    <h5>📦 Delivery Address</h5>
+                    
+                    <div class="address-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="address_option" id="defaultAddr" value="default" checked>
+                            <label class="form-check-label" for="defaultAddr">
+                                Use my registered address
+                            </label>
+                        </div>
+                        <div class="registered-address"><?= htmlspecialchars($user_address) ?></div>
+                    </div>
+
+                    <div class="address-option">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="address_option" id="newAddr" value="new">
+                            <label class="form-check-label" for="newAddr">Deliver to another address</label>
+                        </div>
+                        <textarea name="new_address" id="new_address" class="form-control mt-2" rows="3" placeholder="Enter new delivery address" disabled></textarea>
+                    </div>
                 </div>
 
-                <div class="d-flex justify-content-between mt-4">
+                <div class="checkout-actions">
                     <a href="cart.php?action=clear" class="btn btn-outline-danger">Clear Cart</a>
                     <button type="submit" name="place_order" class="btn btn-gradient">Place Order</button>
                 </div>
@@ -244,12 +204,12 @@ $grandTotal = cartTotals($cart);
             function updateTotals() {
                 const price = parseFloat(row.dataset.price);
                 const qty = parseInt(qtyInput.value);
-                row.querySelector(".line-total").textContent = "$" + (price * qty).toFixed(2);
+                row.querySelector(".total-cell").textContent = "$" + (price * qty).toFixed(2);
 
                 let grand = 0;
-                document.querySelectorAll("#cart-body tr").forEach(r => {
-                    const lt = r.querySelector(".line-total");
-                    if (lt) grand += parseFloat(lt.textContent.replace("$", ""));
+                document.querySelectorAll("#cart-body tr:not(.checkout-grand-total)").forEach(r => {
+                    const tc = r.querySelector(".total-cell");
+                    if (tc) grand += parseFloat(tc.textContent.replace("$", ""));
                 });
                 document.getElementById("grand-total").textContent = "$" + grand.toFixed(2);
             }
@@ -308,8 +268,8 @@ $grandTotal = cartTotals($cart);
                     .then(data => {
                         if (data.status === 'removed') row.remove();
                         let grand = 0;
-                        document.querySelectorAll(".line-total").forEach(lt => {
-                            grand += parseFloat(lt.textContent.replace("$", ""));
+                        document.querySelectorAll(".total-cell").forEach(tc => {
+                            grand += parseFloat(tc.textContent.replace("$", ""));
                         });
                         document.getElementById("grand-total").textContent = "$" + grand.toFixed(2);
                     });

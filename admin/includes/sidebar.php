@@ -7,7 +7,7 @@
     <!-- New Category System -->
     <a href="add_category.php">📁 Add Category</a>
     <a href="manage_categories.php">🗂 Manage Categories</a>
-    
+
     <a href="carousel.php">🎠 Manage Carousel</a>
 
     <!-- Curated Looks Section -->
@@ -20,6 +20,7 @@
     <a href="manage_offers.php">🎁 Manage Offers</a>
     <a href="manage_orders.php">🛒 Manage Orders</a>
     <a href="manage_users.php">👥 Manage Users</a>
+    <a href="manage_subscribers.php">📧 Subscribers</a>
 
     <a href="../index.php" class="mt-4" style="background:#0d6efd; text-align:center;">🏠 Go to Home</a>
     <a href="logout.php" class="mt-auto" style="background:#dc3545; text-align:center;">🔒 Logout</a>

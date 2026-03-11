@@ -50,12 +50,47 @@ h6 {
     display: inline-block;
 }
 
+/* Responsive Font Sizing */
+h1 {
+    font-size: clamp(2rem, 8vw, 4rem);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 5vw, 2rem);
+}
+
+h4 {
+    font-size: clamp(1.1rem, 4.5vw, 1.75rem);
+}
+
+h5 {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+}
+
+h6 {
+    font-size: clamp(0.9rem, 3.5vw, 1.25rem);
+}
+
 .divider {
     height: 4px;
     width: 60px;
     background: var(--gradient-brand);
     border-radius: 10px;
     margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .section-title h2 {
+        font-size: 1.8rem !important;
+    }
+
+    .section-padding {
+        padding: 40px 0 !important;
+    }
 }
 
 /* ------------------------
@@ -65,6 +100,22 @@ h6 {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 30px 30px;
     overflow: hidden;
+    /* start just below navbar for mobile devices */
+    margin-top: 2px;
+}
+
+/* ensure a little more breathing room on larger screens */
+@media (min-width: 769px) {
+    #heroCarousel {
+        margin-top: 15px;
+    }
+}
+
+/* Scaled down carousel controls for better balance */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 2rem;
+    height: 2rem;
 }
 
 .hero-img {
@@ -109,6 +160,38 @@ h6 {
     z-index: 0;
 }
 
+@media (max-width: 768px) {
+    .carousel-item {
+        height: auto !important;
+        min-height: 350px !important;
+    }
+
+    .hero-img {
+        height: auto !important;
+        max-height: 400px !important;
+        object-fit: contain !important;
+        background-color: #fff;
+        /* fallback color */
+    }
+
+    .hero-caption h1 {
+        display: none;
+        /* Hide large overlay text that overlaps image content */
+    }
+
+    .hero-caption .btn {
+        margin-top: 10px;
+        padding: 8px 18px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
 /* ------------------------
    Filter Bar
 ------------------------- */
@@ -118,7 +201,8 @@ h6 {
     border: none;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--card-shadow);
-    padding: 20px;
+    padding: 25px;
+    /* Added slight cushioning */
 }
 
 /* ------------------------
@@ -130,7 +214,8 @@ h6 {
     border: none;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--card-shadow);
-    padding: 20px;
+    padding: 15px;
+    /* Slightly reduced */
 }
 
 .cat-card:hover {
@@ -325,7 +410,52 @@ h6 {
     }
 
     .hero-caption h1 {
-        font-size: 2.5rem;
+        display: none;
+        /* Hide large overlay text that overlaps image content */
+    }
+
+    /* Section Spacing Adjustments */
+    .section-header,
+    .text-center.mb-5 {
+        margin-bottom: 2rem !important;
+        /* Reduce excessive gap */
+    }
+
+    .cat-card {
+        padding: 10px !important;
+    }
+
+    .img-wrapper {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .curated-looks-section {
+        padding: 40px 0 !important;
+    }
+
+    /* Filter Bar Mobile Refinement */
+    .filter-bar {
+        padding: 15px !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .filter-bar .row.g-3>div {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Modernizing Banners on Mobile */
+    .offer-card {
+        min-height: 120px !important;
+        padding: 1.25rem !important;
+    }
+
+    .offer-card h3 {
+        font-size: 1.25rem !important;
+    }
+
+    .offer-card p {
+        font-size: 0.8rem !important;
     }
 }
 

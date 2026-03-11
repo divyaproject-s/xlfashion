@@ -15,8 +15,32 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    padding-top: 86px;
-    /* Header height offset */
+    padding-top: 120px;
+    /* Increased for breathing room (Header is ~106px) */
+}
+
+main {
+    padding-bottom: 20px;
+}
+
+@media (max-width: 991px) {
+    body {
+        padding-top: 140px;
+        /* Increased for mobile (Header is ~121px) */
+        padding-bottom: 75px;
+        /* Space for bottom nav */
+    }
+
+    main {
+        padding-bottom: 40px;
+    }
+}
+
+@media (max-width: 991px) {
+    .top-bar {
+        display: none !important;
+        /* Hide top bar on mobile to save space */
+    }
 }
 
 /* --- Top Bar --- */
@@ -46,6 +70,16 @@ header {
     border-bottom: 1px solid var(--border-color);
 }
 
+@media (max-width: 991px) {
+    .custom-navbar {
+        padding: 5px 0 !important;
+    }
+
+    .navbar-brand img {
+        height: 35px;
+    }
+}
+
 .navbar-inner {
     display: flex;
     align-items: center;
@@ -53,11 +87,26 @@ header {
     width: 100%;
 }
 
+@media (max-width: 991px) {
+    .navbar-inner {
+        flex-wrap: wrap;
+        /* Force two-row layout on mobile */
+    }
+}
+
 /* 1. Left Section: Brand & Nav */
 .nav-left {
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+@media (max-width: 991px) {
+    .nav-left {
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
 }
 
 .navbar-brand {
@@ -118,14 +167,15 @@ header {
 
 /* 2. Center Section: Search */
 .nav-center {
-    flex: 1;
-    max-width: 500px;
-    margin: 0 30px;
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
 }
 
 .search-form {
     position: relative;
     width: 100%;
+    min-width: 300px;
 }
 
 .search-input {
@@ -166,8 +216,8 @@ header {
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 25px;
-    /* More spacing for labeled icons */
+    gap: 15px;
+    /* Spacing for icons */
 }
 
 .nav-icon-link {
@@ -233,16 +283,52 @@ header {
 
 /* Mega Menu Enhancements */
 .mega-menu {
+    width: auto;
+    max-width: 95vw;
     min-width: 650px;
+    max-height: 500px;
     border-top: 4px solid #fff;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mega-menu .row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.mega-menu .col-md-4 {
+    width: 100%;
+    padding: 0 !important;
+}
+
+.mega-menu .col-md-4 li {
+    list-style: none;
 }
 
 @media (max-width: 1200px) {
     .mega-menu {
         min-width: 500px;
+        max-width: 90vw;
+    }
+
+    .mega-menu .row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mega-menu {
+        min-width: 280px;
+        max-width: 85vw;
+    }
+
+    .mega-menu .row {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -254,6 +340,8 @@ header {
     letter-spacing: 0.5px;
     transition: all 0.2s ease;
     border-radius: 8px !important;
+    width: 100%;
+    padding: 10px 12px !important;
 }
 
 .mega-menu .dropdown-item:hover {
@@ -262,10 +350,44 @@ header {
     transform: translateX(5px);
 }
 
+/* Scrollbar styling for mega-menu */
+.mega-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mega-menu::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.mega-menu::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.mega-menu::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
 /* Mobile Responsive */
 @media (max-width: 991px) {
     .navbar-inner {
         flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .nav-left {
+        order: 1;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    .nav-right {
+        order: 2;
+        width: auto;
+        gap: 10px;
+        justify-content: flex-end;
     }
 
     .nav-center {
@@ -281,15 +403,28 @@ header {
         /* Hide desktop menu links */
     }
 
-    /* We'll use the collapsed menu for mobile links if needed, 
-       but for now we are keeping it simple based on the request */
-
-    body {
-        padding-bottom: 70px;
-        /* Offset for bottom nav */
+    /* further refinements for small phones */
+    .navbar-brand .brand-text {
+        font-size: 1.2rem;
     }
 
-    /* Mobile Drawer */
+    .nav-icon-link {
+        font-size: 0.75rem;
+    }
+
+    .search-input {
+        padding: 8px 40px 8px 15px;
+    }
+
+    .navbar-toggler {
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    body {
+        padding-bottom: 0;
+    }
+
     .mobile-menu-drawer {
         width: 80% !important;
         max-width: 320px;
@@ -319,56 +454,6 @@ header {
     .menu-item:active {
         background: #fff0f5;
         color: var(--primary-color);
-    }
-
-    /* Bottom Navigation */
-    .mobile-bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        z-index: 1020;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .bottom-nav-link {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: #666;
-        transition: all 0.2s;
-        gap: 2px;
-    }
-
-    .bottom-nav-link i {
-        font-size: 1.4rem;
-        transition: transform 0.2s;
-    }
-
-    .bottom-nav-link span {
-        font-size: 0.7rem;
-        font-weight: 600;
-    }
-
-    .bottom-nav-link.active {
-        color: var(--primary-color);
-    }
-
-    .bottom-nav-link:active i {
-        transform: scale(0.85);
-    }
-
-    /* Floating Center Icon for Cart */
-    .nav-icon-wrapper {
-        position: relative;
     }
 }
 
